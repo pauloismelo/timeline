@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-import TimelineItem from "./TimelineItem";
+import TimelineItem from "./TimeLineItem";
 import HeaderTimeline from "./HeaderTimeLine";
-import Modal from "./Modal";
 import { parseDate } from "../utils/functions";
 
 
@@ -11,9 +10,8 @@ function diffInDays(dateA, dateB) {
   return Math.floor((parseDate(dateA) - parseDate(dateB)) / msInDay);
 }
 
-export default function Timeline({ items }) {
+export default function Timeline({ items, onItemClick }) {
     const [zoom, setZoom] = useState(50); 
-    const [selectedItem, setSelectedItem] = useState(null); 
 
     const handleUpdate = (updatedItem) => {
         const updatedList = itemList.map((item) =>
@@ -29,8 +27,6 @@ export default function Timeline({ items }) {
 
     const offset = (date) => diffInDays(date, minDate) * zoom;
     const lanes = Math.max(...items.map((item) => item.lane)) + 1;
-
-    console.log(selectedItem);
 
     return (
         <div>
@@ -58,7 +54,8 @@ export default function Timeline({ items }) {
                     item={item}
                     offset={offset}
                     zoom={zoom}
-                    onclick={() => setSelectedItem(item)}
+                    onclick={onItemClick}
+                    
                     />
                     
                 ))}
@@ -66,9 +63,7 @@ export default function Timeline({ items }) {
             </div>
         </div>
 
-        {selectedItem && (
-            <Modal item={selectedItem} onClose={() => setSelectedItem(null)} />
-        )}
+        
         </div>
     );
 }

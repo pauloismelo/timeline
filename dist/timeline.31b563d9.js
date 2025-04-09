@@ -688,14 +688,24 @@ var _timelineJsx = require("./components/Timeline.jsx");
 var _timelineJsxDefault = parcelHelpers.interopDefault(_timelineJsx);
 var _headerJsx = require("./components/Header.jsx");
 var _headerJsxDefault = parcelHelpers.interopDefault(_headerJsx);
+var _modalJsx = require("./components/Modal.jsx");
+var _modalJsxDefault = parcelHelpers.interopDefault(_modalJsx);
 var _bootstrapMinCss = require("bootstrap/dist/css/bootstrap.min.css");
+var _s = $RefreshSig$();
 function App() {
+    _s();
     const itemsWithLanes = (0, _assignLanesJsDefault.default)((0, _timelineItemsJsDefault.default)); //Add lanes to items
+    const [selectedItem, setSelectedItem] = (0, _react.useState)(null);
+    const handleItemClick = (item)=>{
+        console.log("Click:", item.name);
+        setSelectedItem(item);
+    // Aqui você poderia abrir um modal se quiser
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _headerJsxDefault.default), {}, void 0, false, {
                 fileName: "src/index.js",
-                lineNumber: 16,
+                lineNumber: 27,
                 columnNumber: 5
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -708,30 +718,40 @@ function App() {
                         ]
                     }, void 0, true, {
                         fileName: "src/index.js",
-                        lineNumber: 18,
+                        lineNumber: 30,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _timelineJsxDefault.default), {
-                        items: itemsWithLanes
+                        items: itemsWithLanes,
+                        onItemClick: handleItemClick
                     }, void 0, false, {
                         fileName: "src/index.js",
-                        lineNumber: 19,
+                        lineNumber: 31,
                         columnNumber: 7
+                    }, this),
+                    selectedItem && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalJsxDefault.default), {
+                        item: selectedItem,
+                        onClose: ()=>setSelectedItem(null)
+                    }, void 0, false, {
+                        fileName: "src/index.js",
+                        lineNumber: 34,
+                        columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/index.js",
-                lineNumber: 17,
+                lineNumber: 28,
                 columnNumber: 5
             }, this)
         ]
     }, void 0, true);
 }
+_s(App, "1YGeiIMlDw0BzM8kVWnRaE6POaA=");
 _c = App;
 const root = (0, _clientDefault.default).createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/index.js",
-    lineNumber: 26,
+    lineNumber: 42,
     columnNumber: 13
 }, undefined));
 var _c;
@@ -742,7 +762,7 @@ $RefreshReg$(_c, "App");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","react-dom/client":"hrvwu","./timelineItems.js":"FMnwD","./assignLanes.js":"d7Zep","./components/Timeline.jsx":"hdG3V","./components/Header.jsx":"8BCUx","bootstrap/dist/css/bootstrap.min.css":"i5LP7","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"dVPUn":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","react-dom/client":"hrvwu","./timelineItems.js":"FMnwD","./assignLanes.js":"d7Zep","./components/Timeline.jsx":"hdG3V","./components/Header.jsx":"8BCUx","./components/Modal.jsx":"3RoEP","bootstrap/dist/css/bootstrap.min.css":"i5LP7","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"dVPUn":[function(require,module,exports,__globalThis) {
 'use strict';
 module.exports = require("ee51401569654d91");
 
@@ -25189,22 +25209,19 @@ parcelHelpers.export(exports, "default", ()=>Timeline);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _timelineItem = require("./TimelineItem");
-var _timelineItemDefault = parcelHelpers.interopDefault(_timelineItem);
+var _timeLineItem = require("./TimeLineItem");
+var _timeLineItemDefault = parcelHelpers.interopDefault(_timeLineItem);
 var _headerTimeLine = require("./HeaderTimeLine");
 var _headerTimeLineDefault = parcelHelpers.interopDefault(_headerTimeLine);
-var _modal = require("./Modal");
-var _modalDefault = parcelHelpers.interopDefault(_modal);
 var _functions = require("../utils/functions");
 var _s = $RefreshSig$();
 function diffInDays(dateA, dateB) {
     const msInDay = 86400000;
     return Math.floor(((0, _functions.parseDate)(dateA) - (0, _functions.parseDate)(dateB)) / msInDay);
 }
-function Timeline({ items }) {
+function Timeline({ items, onItemClick }) {
     _s();
     const [zoom, setZoom] = (0, _react.useState)(50);
-    const [selectedItem, setSelectedItem] = (0, _react.useState)(null);
     const handleUpdate = (updatedItem)=>{
         const updatedList = itemList.map((item)=>item.id === updatedItem.id ? updatedItem : item);
         setItemList(assignLanes(updatedList)); // reatribui as lanes após a atualização
@@ -25218,7 +25235,6 @@ function Timeline({ items }) {
     const totalDays = diffInDays(maxDate, minDate) + 1;
     const offset = (date)=>diffInDays(date, minDate) * zoom;
     const lanes = Math.max(...items.map((item)=>item.lane)) + 1;
-    console.log(selectedItem);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -25230,7 +25246,7 @@ function Timeline({ items }) {
                         children: "Zoom In"
                     }, void 0, false, {
                         fileName: "src/components/Timeline.jsx",
-                        lineNumber: 38,
+                        lineNumber: 34,
                         columnNumber: 13
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -25239,13 +25255,13 @@ function Timeline({ items }) {
                         children: "Zoom Out"
                     }, void 0, false, {
                         fileName: "src/components/Timeline.jsx",
-                        lineNumber: 44,
+                        lineNumber: 40,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Timeline.jsx",
-                lineNumber: 37,
+                lineNumber: 33,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -25265,7 +25281,7 @@ function Timeline({ items }) {
                             zoom: zoom
                         }, void 0, false, {
                             fileName: "src/components/Timeline.jsx",
-                            lineNumber: 53,
+                            lineNumber: 49,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -25273,48 +25289,40 @@ function Timeline({ items }) {
                                 position: "relative",
                                 height: lanes * 50
                             },
-                            children: items.map((item)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _timelineItemDefault.default), {
+                            children: items.map((item)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _timeLineItemDefault.default), {
                                     item: item,
                                     offset: offset,
                                     zoom: zoom,
-                                    onclick: ()=>setSelectedItem(item)
+                                    onclick: onItemClick
                                 }, item.id, false, {
                                     fileName: "src/components/Timeline.jsx",
-                                    lineNumber: 56,
+                                    lineNumber: 52,
                                     columnNumber: 21
                                 }, this))
                         }, void 0, false, {
                             fileName: "src/components/Timeline.jsx",
-                            lineNumber: 54,
+                            lineNumber: 50,
                             columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/components/Timeline.jsx",
-                    lineNumber: 52,
+                    lineNumber: 48,
                     columnNumber: 13
                 }, this)
             }, void 0, false, {
                 fileName: "src/components/Timeline.jsx",
-                lineNumber: 51,
+                lineNumber: 47,
                 columnNumber: 9
-            }, this),
-            selectedItem && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _modalDefault.default), {
-                item: selectedItem,
-                onClose: ()=>setSelectedItem(null)
-            }, void 0, false, {
-                fileName: "src/components/Timeline.jsx",
-                lineNumber: 70,
-                columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/components/Timeline.jsx",
-        lineNumber: 36,
+        lineNumber: 32,
         columnNumber: 9
     }, this);
 }
-_s(Timeline, "eZYyMvJbeAuozJUTYS+udVl0uvc=");
+_s(Timeline, "VCgEVvZZHaIYPmofXciQ9Yjf0UA=");
 _c = Timeline;
 var _c;
 $RefreshReg$(_c, "Timeline");
@@ -25324,12 +25332,12 @@ $RefreshReg$(_c, "Timeline");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","./TimelineItem":"6m7bO","./HeaderTimeLine":"9ugSL","./Modal":"3RoEP","../utils/functions":"7c63z","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"6m7bO":[function(require,module,exports,__globalThis) {
-var $parcel$ReactRefreshHelpers$53e7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-$parcel$ReactRefreshHelpers$53e7.init();
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","./TimeLineItem":"lvxTx","./HeaderTimeLine":"9ugSL","../utils/functions":"7c63z","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"lvxTx":[function(require,module,exports,__globalThis) {
+var $parcel$ReactRefreshHelpers$ee9f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+$parcel$ReactRefreshHelpers$ee9f.init();
 var prevRefreshReg = globalThis.$RefreshReg$;
 var prevRefreshSig = globalThis.$RefreshSig$;
-$parcel$ReactRefreshHelpers$53e7.prelude(module);
+$parcel$ReactRefreshHelpers$ee9f.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -25338,40 +25346,109 @@ parcelHelpers.export(exports, "default", ()=>TimelineItem);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
+var _editName = require("./EditName");
+var _editNameDefault = parcelHelpers.interopDefault(_editName);
+var _s = $RefreshSig$();
 function TimelineItem({ item, offset, zoom, onclick }) {
-    //console.log(onclick);
-    const left = offset(item.start);
-    const right = offset(item.end);
-    const width = right - left || zoom;
+    _s();
+    const ref = (0, _react.useRef)(null);
+    const [dragging, setDragging] = (0, _react.useState)(false);
+    const [position, setPosition] = (0, _react.useState)(offset(item.start));
+    const [editing, setEditing] = (0, _react.useState)(false);
+    const [name, setName] = (0, _react.useState)(item.name);
+    const [hasMoved, setHasMoved] = (0, _react.useState)(false); //just for verify if the card has moved and block to open the modal
+    const clickTimeoutRef = (0, _react.useRef)(null);
+    const width = Math.max(offset(item.end) - offset(item.start), zoom);
+    const top = item.lane * 50 + 5;
+    const handleMouseDown = (e)=>{
+        //Here I could to work with globalState bringing the function in the props and managing the items in a state inside the index.js
+        //But I prefered to use the local function to focus in the test's requirements
+        e.stopPropagation();
+        const startX = e.clientX;
+        const initialLeft = ref.current.offsetLeft;
+        setHasMoved(false);
+        const handleMouseMove = (e)=>{
+            const deltaX = e.clientX - startX;
+            if (Math.abs(deltaX) > 2) {
+                moved = true;
+                setHasMoved(true);
+                setDragging(true);
+                setPosition(initialLeft + deltaX);
+            }
+        };
+        const handleMouseUp = ()=>{
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+            setTimeout(()=>setDragging(false), 100);
+        };
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+    };
+    const handleClick = (e)=>{
+        if (hasMoved) return;
+        if (clickTimeoutRef.current) {
+            clearTimeout(clickTimeoutRef.current);
+            clickTimeoutRef.current = null;
+            setEditing(true); // double click
+        } else clickTimeoutRef.current = setTimeout(()=>{
+            clickTimeoutRef.current = null;
+            if (onclick) onclick(item); // single click
+        }, 250);
+    };
+    const handleBlur = ()=>{
+        //Here I could to edit the array or maybe call a endpoint to update the name if this name arrive of one database, for example
+        setEditing(false);
+    };
+    const handleKeyDown = (e)=>{
+        //console.log(e.key)
+        if (e.key === "Enter") setEditing(false); //for simulate saving with enter tab
+        else if (e.key === "Escape") {
+            setName(item.name); // Revert to original name
+            setEditing(false);
+        }
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        ref: ref,
         className: "position-absolute bg-secondary text-white p-1 rounded shadow-sm",
         style: {
-            top: item.lane * 50 + 5,
-            left,
+            top,
+            left: position,
             width,
             height: 40,
             whiteSpace: "nowrap",
-            cursor: "pointer"
+            cursor: dragging ? "grabbing" : "grab",
+            zIndex: dragging ? 1000 : 1
         },
-        title: `${item.name}: ${item.start} \u{2192} ${item.end}`,
-        onClick: onclick,
-        children: item.name
+        title: `${item.name}: ${item.start} to ${item.end} - Double click to open details`,
+        onMouseDown: handleMouseDown,
+        onClick: handleClick,
+        children: editing ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _editNameDefault.default), {
+            name: name,
+            handleName: setName,
+            handleBlur: handleBlur,
+            handleKeyDown: handleKeyDown
+        }, void 0, false, {
+            fileName: "src/components/TimeLineItem.jsx",
+            lineNumber: 98,
+            columnNumber: 13
+        }, this) : name
     }, void 0, false, {
-        fileName: "src/components/TimelineItem.jsx",
-        lineNumber: 10,
-        columnNumber: 9
+        fileName: "src/components/TimeLineItem.jsx",
+        lineNumber: 81,
+        columnNumber: 7
     }, this);
 }
+_s(TimelineItem, "/N6ITpEyfVL9hhgL23E5CjK6Z7w=");
 _c = TimelineItem;
 var _c;
 $RefreshReg$(_c, "TimelineItem");
 
-  $parcel$ReactRefreshHelpers$53e7.postlude(module);
+  $parcel$ReactRefreshHelpers$ee9f.postlude(module);
 } finally {
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"7h6Pi":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi","./EditName":"cK36k"}],"7h6Pi":[function(require,module,exports,__globalThis) {
 "use strict";
 var Refresh = require("7422ead32dcc1e6b");
 function debounce(func, delay) {
@@ -27649,7 +27726,47 @@ function $da9882e673ac146b$var$ErrorOverlay() {
     return null;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"9ugSL":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cK36k":[function(require,module,exports,__globalThis) {
+var $parcel$ReactRefreshHelpers$9721 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+$parcel$ReactRefreshHelpers$9721.init();
+var prevRefreshReg = globalThis.$RefreshReg$;
+var prevRefreshSig = globalThis.$RefreshSig$;
+$parcel$ReactRefreshHelpers$9721.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+function EditName({ name, handleName, handleBlur, handleKeyDown }) {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+            type: "text",
+            value: name,
+            onChange: (e)=>handleName(e.target.value),
+            onBlur: handleBlur,
+            onKeyDown: handleKeyDown,
+            autoFocus: true,
+            style: {
+                width: "100%"
+            }
+        }, void 0, false, {
+            fileName: "src/components/EditName.jsx",
+            lineNumber: 6,
+            columnNumber: 9
+        }, this)
+    }, void 0, false);
+}
+_c = EditName;
+exports.default = EditName;
+var _c;
+$RefreshReg$(_c, "EditName");
+
+  $parcel$ReactRefreshHelpers$9721.postlude(module);
+} finally {
+  globalThis.$RefreshReg$ = prevRefreshReg;
+  globalThis.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"dVPUn","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"9ugSL":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$e090 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 $parcel$ReactRefreshHelpers$e090.init();
 var prevRefreshReg = globalThis.$RefreshReg$;
@@ -27705,7 +27822,65 @@ $RefreshReg$(_c, "HeaderTimeline");
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","../utils/functions":"7c63z","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"3RoEP":[function(require,module,exports,__globalThis) {
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","../utils/functions":"7c63z","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"8BCUx":[function(require,module,exports,__globalThis) {
+var $parcel$ReactRefreshHelpers$bb7d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+$parcel$ReactRefreshHelpers$bb7d.init();
+var prevRefreshReg = globalThis.$RefreshReg$;
+var prevRefreshSig = globalThis.$RefreshSig$;
+$parcel$ReactRefreshHelpers$bb7d.prelude(module);
+
+try {
+// components/Header.jsx
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Header);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+function Header() {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("header", {
+        className: "bg-dark text-white py-3 mb-4",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "container d-flex justify-content-between align-items-center",
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                    className: "h4 mb-0",
+                    children: "\uD83D\uDCC5 Airtable Timeline"
+                }, void 0, false, {
+                    fileName: "src/components/Header.jsx",
+                    lineNumber: 8,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+                    className: "text-light small",
+                    children: "Developed by Paulo Melo"
+                }, void 0, false, {
+                    fileName: "src/components/Header.jsx",
+                    lineNumber: 9,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/Header.jsx",
+            lineNumber: 7,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "src/components/Header.jsx",
+        lineNumber: 6,
+        columnNumber: 5
+    }, this);
+}
+_c = Header;
+var _c;
+$RefreshReg$(_c, "Header");
+
+  $parcel$ReactRefreshHelpers$bb7d.postlude(module);
+} finally {
+  globalThis.$RefreshReg$ = prevRefreshReg;
+  globalThis.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"3RoEP":[function(require,module,exports,__globalThis) {
 var $parcel$ReactRefreshHelpers$70b8 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 $parcel$ReactRefreshHelpers$70b8.init();
 var prevRefreshReg = globalThis.$RefreshReg$;
@@ -27747,7 +27922,7 @@ function Modal({ item, onClose }) {
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                 type: "button",
-                                className: "btn-close",
+                                className: "btn-close text-white",
                                 onClick: onClose
                             }, void 0, false, {
                                 fileName: "src/components/Modal.jsx",
@@ -27842,64 +28017,6 @@ var _c;
 $RefreshReg$(_c, "Modal");
 
   $parcel$ReactRefreshHelpers$70b8.postlude(module);
-} finally {
-  globalThis.$RefreshReg$ = prevRefreshReg;
-  globalThis.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"dVPUn","react":"jMk1U","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"7h6Pi"}],"8BCUx":[function(require,module,exports,__globalThis) {
-var $parcel$ReactRefreshHelpers$bb7d = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-$parcel$ReactRefreshHelpers$bb7d.init();
-var prevRefreshReg = globalThis.$RefreshReg$;
-var prevRefreshSig = globalThis.$RefreshSig$;
-$parcel$ReactRefreshHelpers$bb7d.prelude(module);
-
-try {
-// components/Header.jsx
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>Header);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-function Header() {
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("header", {
-        className: "bg-dark text-white py-3 mb-4",
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-            className: "container d-flex justify-content-between align-items-center",
-            children: [
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                    className: "h4 mb-0",
-                    children: "\uD83D\uDCC5 Airtable Timeline"
-                }, void 0, false, {
-                    fileName: "src/components/Header.jsx",
-                    lineNumber: 8,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                    className: "text-light small",
-                    children: "Developed by Paulo Melo"
-                }, void 0, false, {
-                    fileName: "src/components/Header.jsx",
-                    lineNumber: 9,
-                    columnNumber: 9
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "src/components/Header.jsx",
-            lineNumber: 7,
-            columnNumber: 7
-        }, this)
-    }, void 0, false, {
-        fileName: "src/components/Header.jsx",
-        lineNumber: 6,
-        columnNumber: 5
-    }, this);
-}
-_c = Header;
-var _c;
-$RefreshReg$(_c, "Header");
-
-  $parcel$ReactRefreshHelpers$bb7d.postlude(module);
 } finally {
   globalThis.$RefreshReg$ = prevRefreshReg;
   globalThis.$RefreshSig$ = prevRefreshSig;
