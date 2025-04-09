@@ -30,7 +30,7 @@ npm start
 
 ## 🚀 future Improvements
 
--state Management with ContextApi or Redux
--Add functionality to create new items dynamically
--API/database integration for persistent data
--Date range validation and restrictions
+- state Management with ContextApi or Redux
+- Add functionality to create new items dynamically
+- API/database integration for persistent data
+- Date range validation and restrictions
