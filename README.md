@@ -23,7 +23,7 @@ cd timeline
 npm install
 
 
-### 2. Install dependencies
+### 2. Start Project
 
 npm start
 
