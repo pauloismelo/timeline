@@ -26,7 +26,6 @@ export default function TimelineItem({ item, offset, zoom, onclick }) {
         const handleMouseMove = (e) => {
             const deltaX = e.clientX - startX;
             if (Math.abs(deltaX) > 2) {
-                moved = true;
                 setHasMoved(true);
                 setDragging(true);
                 setPosition(initialLeft + deltaX);
