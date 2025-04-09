@@ -1,7 +1,7 @@
 # timeline
 Project developed for Turing company in a AirTable's process 
 
-## ✨ Features
+## Features
 
 - Visual representation of items distributed in lanes
 - Time Header scale based on days
@@ -28,7 +28,7 @@ npm install
 npm start
 
 
-## 🚀 future Improvements
+## Future Improvements
 
 - state Management with ContextApi or Redux
 - Add functionality to create new items dynamically
