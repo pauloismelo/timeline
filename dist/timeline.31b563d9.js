@@ -25370,7 +25370,6 @@ function TimelineItem({ item, offset, zoom, onclick }) {
         const handleMouseMove = (e)=>{
             const deltaX = e.clientX - startX;
             if (Math.abs(deltaX) > 2) {
-                moved = true;
                 setHasMoved(true);
                 setDragging(true);
                 setPosition(initialLeft + deltaX);
@@ -25429,12 +25428,12 @@ function TimelineItem({ item, offset, zoom, onclick }) {
             handleKeyDown: handleKeyDown
         }, void 0, false, {
             fileName: "src/components/TimeLineItem.jsx",
-            lineNumber: 98,
+            lineNumber: 97,
             columnNumber: 13
         }, this) : name
     }, void 0, false, {
         fileName: "src/components/TimeLineItem.jsx",
-        lineNumber: 81,
+        lineNumber: 80,
         columnNumber: 7
     }, this);
 }

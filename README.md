@@ -8,7 +8,7 @@ Project developed for Turing company in a AirTable's process
 - Drag and drop support to reposition items
 - Double-click to edit item names inline
 - Keyboard support: `Enter` to save, `Esc` to cancel edits
-- Responsive layout with Bootstrap 5 styling (To avoid compatibility issues between the package and tailwind, I chose to use bootstrap in this project.)
+- Responsive layout with Bootstrap 5 styling (To avoid compatibility issues between the parcel and tailwind, I chose to use bootstrap in this project.)
 - Simple and modular component structure
 
 ## Getting Started
